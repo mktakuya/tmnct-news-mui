@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import createHashHistory from 'history/createHashHistory';
 import App from './App';
-import * as reducers from './reducers';
+import createStore from './createStore';
 
-const store = createStore(
-  combineReducers(reducers),
-  applyMiddleware()
-)
+const history = createHashHistory();
+
+const store = createStore(history);
 
 ReactDOM.render(
   <Provider store={store}>
