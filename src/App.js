@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import News from './components/News'
+import News from './containers/News'
 
 class App extends Component {
   render() {
