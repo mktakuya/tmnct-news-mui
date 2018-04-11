@@ -1,4 +1,3 @@
-import FeedParser from 'feedparser';
 import request from 'request';
 
 const FEED_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -24,28 +23,15 @@ export const fetchNews = category => {
   return async dispatch => {
     dispatch(startRequest(category));
 
-    const feedParser = new FeedParser();
     const req = request(FEED_URL);
 
     const items = [];
 
     req.on('response', function(res) {
-      dispatch(receiveData(category, null, res.data));
-      this.pipe(feedParser);
+      dispatch(receiveData(category, null, res));
     });
 
-    feedParser.on('readable', function () {
-      const item = this.read();
-      if (item) {
-        if (category === 'all') {
-          items.push(item);
-        } else if (item.categories[0] === category) {
-          items.push(item);
-        }
-      }
-    });
-
-    feedParser.on('end', function() {
+    req.on('end', function() {
       dispatch(finishRequest(category));
     });
   }
